@@ -4,7 +4,8 @@ import telebot
 from telebot import types
 load_dotenv()
 
-TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
+##TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
+TELEGRAM_TOKEN = '6721522547:AAF_x3ZT6hDC1zRzNd5KjSpxZYKFB-ak_-s'
 bot = telebot.TeleBot(TELEGRAM_TOKEN, parse_mode=None)
 
 

@@ -8,7 +8,6 @@ TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN, parse_mode=None)
 
-
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)

@@ -34,7 +34,7 @@ def act1(message, right_answer: str):
 
     if message.text == right_answer:
         bot.send_message(message.chat.id, 'хорошо ,но что бы все получилось ты должен ответить на вопрос',
-                         reply_markup=types.ReplyKeyboardRemove())
+                         reply_markup=markup)
         bot.send_message(message.chat.id, 'сколько пар лап у муравьев', reply_markup=markup)
         bot.register_next_step_handler(message, act2, "3")
 
@@ -47,9 +47,9 @@ def act2(message, right_answer: str):
     if message.text == right_answer:
         bot.send_photo(message.chat.id, pic_muravyi)
         bot.send_message(message.chat.id, 'отлично , теперь у тебя есть собственная колония муравьев ',
-                         reply_markup=types.ReplyKeyboardRemove())
+                         reply_markup=markup)
         bot.send_message(message.chat.id, 'для существования твоей колонии нужны ресурсы',
-                         reply_markup=types.ReplyKeyboardRemove())
+                         reply_markup=markup)
         bot.send_message(message.chat.id, 'нажми на кнопку "путешествия" и выбери лес что бы найти еду',
                          reply_markup=markup)
         bot.register_next_step_handler(message, act3, "путешествия 🎒")
@@ -75,7 +75,7 @@ def act4(message, right_answer: str):
 
         bot.send_photo(message.chat.id, pic_les)
         bot.send_message(message.chat.id, 'хорошо , ты зашел в лес , выбери в возможных действиях "искать еду"',
-                         reply_markup=types.ReplyKeyboardRemove())
+                         reply_markup=markup)
         bot.send_message(message.chat.id, 'чтобы найти еду нужно ответить на вопрос', reply_markup=markup)
         bot.register_next_step_handler(message, act5, "искать еду 🥪")
 
@@ -98,7 +98,7 @@ def act6(message, right_answer: str):
     if message.text == right_answer:
         bot.send_photo(message.chat.id, pic_listok)
         bot.send_message(message.chat.id, 'ты обноружил листок 🌿 (15) , прикажи своим муравьям забрать его',
-                         reply_markup=types.ReplyKeyboardRemove())
+                         reply_markup=markup)
         bot.send_message(message.chat.id,
                          'чтобы забирать ресурсы муравьям необходимо время 🕑 (1 мин)',
                          reply_markup=markup)
@@ -194,15 +194,62 @@ def act14(message, right_answer: str):
 
 def act15(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    markup.add("путешествия 🎒",)
 
     if message.text == right_answer:
         bot.send_photo(message.chat.id, pic_muravyi)
         bot.send_message(message.chat.id, 'ты вернулся в колонию', reply_markup=markup)
         bot.send_message(message.chat.id, 'здесь ты можешь улучшать свою её и воссотанавливать здоровье  , '
                                           'а сейчас твоё обучение закончино , удачи!', reply_markup=markup)
-        bot.register_next_step_handler(message, act15, "")
+        bot.register_next_step_handler(message, act16, "")
 
 #################################################################################################
 ## конец обучения
+
+def act16(message, right_answer: str):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    markup.add("лес 🌲")
+
+
+    if message.text == "путешествия 🎒" :
+        bot.send_message(message.chat.id, 'выбрери локацию', reply_markup=markup)
+        bot.register_next_step_handler(message, act17, "")
+##путешествия
+
+def act17(message, right_answer: str):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    markup.add("искать еду 🥪", "искать врага ⚔")
+
+    if message.text == "лес 🌲":
+        bot.send_photo(message.chat.id, pic_les)
+        bot.send_message(message.chat.id, 'Ты зашел в лес',
+                         reply_markup=markup)
+        bot.register_next_step_handler(message, act18, "")
+
+##лес
+
+def act18(message, right_answer: str):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+
+
+    if message.text == "искать еду 🥪" :
+
+        bot.send_message(message.chat.id, 'чтобы найти еду нужно ответить на вопрос',
+                         reply_markup=markup)
+        bot.register_next_step_handler(message, act19, ".")
+
+   ##искать еду
+
+def act19(message, right_answer: str):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    markup.add("биология 🔬", "физика 🌈", "химия 🎆", "математика ➗", "геометрия 📐")
+
+    if message.text == "." :
+        bot.send_message(message.chat.id, 'выбери тему', reply_markup=markup)
+        bot.send_message(message.chat.id, 'чтобы найти еду нужно ответить на вопрос',
+                         reply_markup=markup)
+        bot.register_next_step_handler(message, act19, "")
+
+
 
 bot.infinity_polling()

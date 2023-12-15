@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import telebot
 from telebot import types
+import random
+
 
 load_dotenv()
 
@@ -15,7 +17,8 @@ pic_listok= "https://img.freepik.com/premium-vector/leaf-logo-icon-in-pixel-art_
 pic_pauk="https://static.vecteezy.com/system/resources/previews/023/685/239/original/pixel-art-illustration-spider-pixelated-spider-insect-creepy-enemy-spider-pixelated-for-the-pixel-art-game-and-icon-for-website-and-video-game-old-school-retro-vector.jpg"
 
 ## начало обучения
-#################################################################################################
+################################################################################################
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -265,24 +268,46 @@ def act17(message, right_answer: str):
 
     if message.text == "искать еду 🥪" :
 
-        bot.send_message(message.chat.id, 'чтобы найти еду нужно ответить на вопрос',
+        bot.send_message(message.chat.id, 'чтобы найти еду нужно решить задачу',
                          reply_markup=markup)
         bot.register_next_step_handler(message, act18, "")
     else:
         bot.register_next_step_handler(message, act17, "")
 
-   ##искать еду
+##искать еду
+
+
+## вопросы
 
 def act18(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-    markup.add("биология 🔬", "физика 🌈", "химия 🎆", "математика ➗", "геометрия 📐")
-
     if message.text == "ответить":
+        number = str(random.randint(1,2))
+        pic = os.environ["pic_l" + number]
+        answer = os.environ["pic_l" + number + '0']
+        option1 = answer
+        option2 = os.environ["pic_l" + number + '1']
+        option3 = os.environ["pic_l" + number + '2']
+        bot.send_photo(message.chat.id, pic)
+        markup.add(option1,option2,option3)
+        bot.send_message(message.chat.id, 'реши загадку',
+                         reply_markup=markup)
+        bot.register_next_step_handler(message, act19,answer)
 
-       bot.send_message(message.chat.id, 'выбери тему', reply_markup=markup)
-       bot.register_next_step_handler(message, act18, "")
-    if message.text == "вернуться  ⬅":
-       bot.register_next_step_handler(message, act16, "")
+## проверка ответа
+
+def act19(message, right_answer: str):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+
+    if message.text == right_answer:
+            bot.send_message(message.chat.id, "правильно ✔", reply_markup=markup)
+
+    else:
+            bot.send_message(message.chat.id, "неправильно ❌", reply_markup=markup)
+            bot.send_message(message.chat.id, "правильный ответ", reply_markup=markup)
+            bot.send_message(message.chat.id, right_answer, reply_markup=markup)
+
+
 
 
 

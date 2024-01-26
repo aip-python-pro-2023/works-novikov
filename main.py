@@ -19,7 +19,6 @@ pic_pauk="https://static.vecteezy.com/system/resources/previews/023/685/239/orig
 ## начало обучения
 ################################################################################################
 
-
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -283,21 +282,34 @@ def act18(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     if message.text == "ответить":
         number = str(random.randint(1,2))
-        pic = os.environ["pic_l" + number]
-        answer = os.environ["pic_l" + number + '0']
+        question = os.environ["ql_" + number]
+        answer = os.environ["ql_" + number + '0']
         option1 = answer
-        option2 = os.environ["pic_l" + number + '1']
-        option3 = os.environ["pic_l" + number + '2']
-        bot.send_photo(message.chat.id, pic)
-        markup.add(option1,option2,option3)
-        bot.send_message(message.chat.id, 'реши загадку',
-                         reply_markup=markup)
+        option2 = os.environ["ql_" + number + '1']
+        option3 = os.environ["ql_" + number + '2']
+        bot.send_message(message.chat.id, question,reply_markup=markup)
+        number = int(random.randint(1,6))
+        if number == 1:
+             markup.add(option1,option2,option3)
+        if number == 2:
+             markup.add(option1,option3,option2)
+        if number == 3:
+             markup.add(option2,option1,option3)
+        if number == 4:
+             markup.add(option2,option3,option1)
+        if number == 5:
+             markup.add(option3,option1,option2)
+        if number == 6:
+             markup.add(option3,option2,option1)
+        bot.send_message(message.chat.id, 'реши загадку',reply_markup=markup)
         bot.register_next_step_handler(message, act19,answer)
 
 ## проверка ответа
 
 def act19(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+
+    why = os.environ["ql_" + right_answer + 'w']
 
     if message.text == right_answer:
             bot.send_message(message.chat.id, "правильно ✔", reply_markup=markup)
@@ -306,7 +318,7 @@ def act19(message, right_answer: str):
             bot.send_message(message.chat.id, "неправильно ❌", reply_markup=markup)
             bot.send_message(message.chat.id, "правильный ответ", reply_markup=markup)
             bot.send_message(message.chat.id, right_answer, reply_markup=markup)
-
+    bot.send_message(message.chat.id, why, reply_markup=markup)
 
 
 

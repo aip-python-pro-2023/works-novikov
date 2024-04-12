@@ -640,4 +640,3 @@ def act26(message, right_answer: str):
 
 
 bot.infinity_polling()
-

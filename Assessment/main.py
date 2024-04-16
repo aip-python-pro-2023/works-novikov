@@ -1,16 +1,17 @@
 from pokeapi import PokeAPI
 
-def main():
-    ditto = PokeAPI.get_pokemon("ditto")
-    print("ditto:", ditto)
 
-    heaviest_pokemon = None
-    for i, pokemon in enumerate(PokeAPI.get_all(get_full=True)):
+ditto = PokeAPI.get_pokemon("ditto")
+print("Pokemon Ditto:", ditto)
 
-        if i == 0 or pokemon.weight > heaviest_pokemon.weight:
-            heaviest_pokemon = pokemon
 
-    print("Самый тяжёлый покемон:", heaviest_pokemon)
+heaviest_pokemon = None
+max_weight = 0
 
-if __name__ == "__main__":
-    main()
+for pokemon in PokeAPI.get_all(get_full=True):
+    print(pokemon)
+    if pokemon._weight > max_weight:
+        max_weight = pokemon._weight
+        heaviest_pokemon = pokemon
+
+print("Heaviest Pokemon:", heaviest_pokemon)

@@ -18,21 +18,17 @@ pic_les = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX1YgDDzzat1aVE
 pic_listok= "https://img.freepik.com/premium-vector/leaf-logo-icon-in-pixel-art_588783-270.jpg"
 pic_pauk="https://static.vecteezy.com/system/resources/previews/023/685/239/original/pixel-art-illustration-spider-pixelated-spider-insect-creepy-enemy-spider-pixelated-for-the-pixel-art-game-and-icon-for-website-and-video-game-old-school-retro-vector.jpg"
 
-## начало обучения
-################################################################################################
 
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     markup.add("создать колонию 🏡")
     bot.send_photo(message.chat.id, pic_pole)
-    bot.send_message(message.chat.id, 'привет , сейчас ты на поле , нажми на кнопку чтобы создать колонию',
+    bot.send_message(message.chat.id, 'привет ,сейчас ты находишься рядом с лесом , нажми на кнопку чтобы создать колонию',
                      reply_markup=markup)
     bot.register_next_step_handler(message, act1, "создать колонию 🏡")
 
 
-
-## создание колонии
 
 def act1(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -46,7 +42,7 @@ def act1(message, right_answer: str):
     else:
         bot.register_next_step_handler(message, act1, "")
 
-## путешествие
+
 
 def act2(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -64,7 +60,7 @@ def act2(message, right_answer: str):
     else:
         bot.register_next_step_handler(message, act2, "")
 
-## вход в лес
+
 
 def act3(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -76,7 +72,7 @@ def act3(message, right_answer: str):
         bot.register_next_step_handler(message, act4, "")
     else:
         bot.register_next_step_handler(message, act3, "")
-## поиск еды
+
 
 def act4(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -92,7 +88,7 @@ def act4(message, right_answer: str):
         bot.register_next_step_handler(message, act5, "")
     else:
         bot.register_next_step_handler(message, act4, "")
-## вопрос
+
 
 def act5(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -104,23 +100,24 @@ def act5(message, right_answer: str):
     else:
         bot.register_next_step_handler(message, act5, "")
 
-## ахождение листка
+
 
 def act6(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     markup.add("собрать")
 
     if message.text == "2":
+        bot.send_message(message.chat.id, 'интересная информация: https://antclub.org/morphology/anatomy', reply_markup=markup)
         bot.send_photo(message.chat.id, pic_listok)
-        bot.send_message(message.chat.id, 'уровень 1 опыт 5/200', reply_markup=markup)
-        bot.send_message(message.chat.id, 'помни что каждые 200 едениц опыта уровень повышается', reply_markup=markup)
-        bot.send_message(message.chat.id, 'ты обноружил листок 🌿 (15) , прикажи своим муравьям забрать его',
-                         reply_markup=markup)
+        bot.send_message(message.chat.id, 'уровень 1 опыт 5/100', reply_markup=markup)
+        bot.send_message(message.chat.id, 'помни что каждые 100 едениц опыта уровень повышается', reply_markup=markup)
+        bot.send_message(message.chat.id, 'ты обноружил листок 🌿 (15🌿) , прикажи своим муравьям забрать его', reply_markup=markup)
+        bot.send_message(message.chat.id, 'интересная информация : https://www.darwinmuseum.ru/subprojects/exposition/?hall=5&showcase=30&zone=7&id=100869',reply_markup=markup)
         bot.register_next_step_handler(message, act7, "")
     else:
         bot.register_next_step_handler(message, act6, "")
 
-## ускорение сбора
+
 
 def act7(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -138,7 +135,7 @@ def act7(message, right_answer: str):
     else:
         bot.register_next_step_handler(message, act7, "")
 
-## путешествие
+
 
 def act8(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -151,7 +148,7 @@ def act8(message, right_answer: str):
     else:
         bot.register_next_step_handler(message, act8, "")
 
-## нападение
+
 
 def act9(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -176,7 +173,7 @@ def act10(message, right_answer: str):
         bot.register_next_step_handler(message, act11, "")
     else:
         bot.register_next_step_handler(message, act10, "")
-## атака
+
 
 def act11(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -202,7 +199,7 @@ def act12(message, right_answer: str):
         bot.register_next_step_handler(message, act13, "")
     else:
         bot.register_next_step_handler(message, act12, "")
-## защита
+
 
 def act13(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -229,7 +226,7 @@ def act14(message, right_answer: str):
     else:
         bot.register_next_step_handler(message, act14, "")
 
-## победа
+
 
 def act15(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -238,13 +235,13 @@ def act15(message, right_answer: str):
     if message.text == "атаковать ⚔":
         bot.send_message(message.chat.id, 'паук 🕷️ (0 ❤️)', reply_markup=markup)
         bot.send_message(message.chat.id, 'ты одержал победу над врагом , теперь ты можешь спокойно вернуться в колонию', reply_markup=markup)
-        bot.send_message(message.chat.id, 'уровень 1 опыт 20/200', reply_markup=markup)
+        bot.send_message(message.chat.id, 'уровень 1 опыт 20/100', reply_markup=markup)
         os.environ["exp"] = "20"
         os.environ["level"] = "1"
         bot.register_next_step_handler(message, act16, "")
     else:
          bot.register_next_step_handler(message, act15, "")
-## путешествие
+
 
 
 def act16(message, right_answer: str):
@@ -258,7 +255,7 @@ def act16(message, right_answer: str):
     else:
         bot.register_next_step_handler(message, act16, "")
 
-## вход в колонию
+
 
 def act17(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -298,8 +295,10 @@ def act18(message, right_answer: str):
 
     elif  ((os.environ["location"] == "kolonya") or (message.text == "колония 🏡"))and(os.environ["r"] == "2"):
         markup.add("путешествия 🎒","улучшить колонию ⭐","cтатистика колонии ℹ️",)
-        if int(os.environ["hp"]) < int(os.environ["hp_max"]) or int(os.environ["hetin"]) < int(os.environ["hetin_max"]):
-            os.environ["price_hp"] = str((int(os.environ["hp_max"]) - int(os.environ["hp"]) + int(os.environ["hetin_max"]) - int(os.environ["hetin"]))*2)
+        if int(os.environ["hetin"]) < int(os.environ["hetin_max"]):
+            os.environ["hetin"] = os.environ["hetin_max"]
+        if int(os.environ["hp"]) < int(os.environ["hp_max"]):
+            os.environ["price_hp"] = str((int(os.environ["hp_max"]) - int(os.environ["hp"]))*2)
             btn1 = "пополнить здоровье ❤️(" + os.environ["price_hp"] + '🌿)'
             markup.add(btn1)
         os.environ["location"] = "kolonya"
@@ -311,7 +310,7 @@ def act18(message, right_answer: str):
         bot.register_next_step_handler(message, act19, "")
     else:
         bot.register_next_step_handler(message, act18, "")
-##лес
+
 
 def act19(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -350,7 +349,7 @@ def act19(message, right_answer: str):
         level = 'ваш уровень : ' + os.environ["level"]
         markup.add("продолжить")
         bot.send_message(message.chat.id, level, reply_markup=markup)
-        exp ='опыт : '+ os.environ["exp"] + "/200"
+        exp ='опыт : '+ os.environ["exp"] + "/100"
         bot.send_message(message.chat.id, exp, reply_markup=markup)
         sklad = os.environ["sklad"] + "🌿/" + os.environ["sklad_max"] + "🌿"
         bot.send_message(message.chat.id, sklad, reply_markup=markup)
@@ -381,9 +380,10 @@ def act19(message, right_answer: str):
             os.environ["damage_en"] = str(random.randint(10, 17))
             bot.send_photo(message.chat.id, pic_pauk)
             os.environ["en_hp"] = str(random.randint(15, 25))
+            os.environ["en_hpmax"] = os.environ["en_hp"]
             p = "ты встретил паука 🕷️(" + os.environ["en_hp"] + "❤️)(" + os.environ["damage_en"] + "⚔)"
             bot.send_message(message.chat.id, p, reply_markup=markup)
-            os.environ["step"] == "attack"
+            os.environ["step"] = "attack"
             bot.register_next_step_handler(message, act24, "")
 
         if number == 2:
@@ -392,18 +392,17 @@ def act19(message, right_answer: str):
             bot.send_photo(message.chat.id, pic_muravei)
             os.environ["damage_en"] = str(random.randint(5, 12))
             os.environ["en_hp"] = str(random.randint(7, 15))
+            os.environ["en_hpmax"] = os.environ["en_hp"]
             p = "ты встретил муравья 🐜(" + os.environ["en_hp"] + "❤️)(" + os.environ["damage_en"] + "⚔)"
             bot.send_message(message.chat.id, p, reply_markup=markup)
-            os.environ["step"] == "attack"
+            os.environ["step"] = "attack"
             bot.register_next_step_handler(message, act24, "")
 
 
     else:
         bot.register_next_step_handler(message, act19, "")
-##искать еду
 
 
-## вопросы
 
 def act20(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -434,7 +433,6 @@ def act20(message, right_answer: str):
         bot.register_next_step_handler(message, act20,"")
 
 
-## проверка ответа
 
 def act21(message, right_answer: str):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -447,14 +445,14 @@ def act21(message, right_answer: str):
             os.environ["is_answer_right"] = "1"
             os.environ["exp"] = str(int(os.environ["exp"]) + 5)
             exp = int(os.environ["exp"])
-            if exp == 200 or exp > 200:
-                exp = exp - 200
+            if exp == 100 or exp > 100:
+                exp = exp - 100
                 os.environ["level"] = str(int(os.environ["level"]) + 1)
             level = os.environ["level"]
             os.environ["exp"] = str(exp)
             level = 'ваш уровень : ' + os.environ["level"]
             bot.send_message(message.chat.id, level, reply_markup=markup)
-            exp = 'опыт : ' + os.environ["exp"] + "/200"
+            exp = 'опыт : ' + os.environ["exp"] + "/100"
             bot.send_message(message.chat.id, exp, reply_markup=markup)
 
 
@@ -577,7 +575,7 @@ def act25(message, right_answer: str):
 
     elif message.text == right_answer and os.environ["step"] =="protection" :
         markup.add("защититься 🛡️")
-        bot.send_message(message.chat.id, 'правильно ✔,ты получаешь возможность защиты', reply_markup=markup)
+        bot.send_message(message.chat.id, 'правильно ✔ ,ты получаешь возможность защиты', reply_markup=markup)
         os.environ["is_answer_right"] = "1"
 
     else:
@@ -596,25 +594,33 @@ def act26(message, right_answer: str):
         if int(os.environ["en_hp"]) <= 0 :
             os.environ["en_hp"] = "0"
             bot.send_message(message.chat.id, "ты выиграл", reply_markup=markup)
-        p = "враг (" + os.environ["en_hp"] + "❤️)"
+            if os.environ["en"] == "muravey":
+                number = str(random.randint(3, 10))
+            if os.environ["en"] == "pauk":
+                number = str(random.randint(6, 16))
+            nasekomoe = "ты можешь собрать части наcекомого(" + number + "🪲)"
+            markup.add("собрать")
+            bot.send_message(message.chat.id, "ты можеш собрать части начекомого", reply_markup=markup)
+
+        p = "враг (" + os.environ["en_hp"] + "❤️/" + os.environ["en_hpmax"] + "❤️)"
         hp = "здоровье : " + os.environ["hp"] + "❤️/" + os.environ["hp_max"] + "    " + os.environ["hetin"] + "🛡️/" +  os.environ["hetin_max"] + "🛡️"
         bot.send_message(message.chat.id, p, reply_markup=markup)
         bot.send_message(message.chat.id, hp, reply_markup=markup)
-        os.environ["step"] == "protection"
+        os.environ["step"] = "protection"
         bot.register_next_step_handler(message, act24, "")
 
     elif message.text == "продолжить" and os.environ["is_answer_right"] == "0" and os.environ["step"] =="attack" :
         markup.add("продолжить")
-        p = "враг (" + os.environ["en_hp"] + "❤️)"
+        p = "враг (" + os.environ["en_hp"] + "❤️/" + os.environ["en_hpmax"] + "❤️)"
         hp = "здоровье : (" + os.environ["hp"] + "❤️/" + os.environ["hp_max"] + ")    (" + os.environ["hetin"] + "🛡️/" + os.environ["hetin_max"] + "🛡️)"
         bot.send_message(message.chat.id, p, reply_markup=markup)
         bot.send_message(message.chat.id, hp, reply_markup=markup)
-        os.environ["step"] == "protection"
+        os.environ["step"] = "protection"
         bot.register_next_step_handler(message, act24, "")
 
     elif message.text == "защититься 🛡️" and os.environ["is_answer_right"] == "1" and os.environ["step"] =="protection" :
         os.environ["hetin"] = str(int(os.environ["hetin"]) - int(os.environ["damage_en"]))
-        p = "враг (" + os.environ["en_hp"] + "❤️)"
+        p = "враг (" + os.environ["en_hp"] + "❤️/" + os.environ["en_hpmax"] + "❤️)"
         if int(os.environ["hetin"]) <= 0 :
             os.environ["hp"] = str(int(os.environ["hp"]) + int(os.environ["hetin"]))
             os.environ["hetin"] = '0'
@@ -624,7 +630,7 @@ def act26(message, right_answer: str):
         hp = "здоровье : " + os.environ["hp"] + "❤️/" + os.environ["hp_max"] + "    " + os.environ["hetin"] + "🛡️/" +  os.environ["hetin_max"] + "🛡️"
         bot.send_message(message.chat.id, p, reply_markup=markup)
         bot.send_message(message.chat.id, hp, reply_markup=markup)
-        os.environ["step"] == "attack"
+        os.environ["step"] = "attack"
         bot.register_next_step_handler(message, act24, "")
 
     elif message.text == "продолжить" and os.environ["is_answer_right"] == "0" and os.environ["step"] == "protection":

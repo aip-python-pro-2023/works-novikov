@@ -1,9 +1,7 @@
 from pokeapi import PokeAPI
 
-
 ditto = PokeAPI.get_pokemon("ditto")
 print("Pokemon Ditto:", ditto)
-
 
 heaviest_pokemon = None
 max_weight = 0

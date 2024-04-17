@@ -14,4 +14,4 @@ for pokemon in PokeAPI.get_all(get_full=True):
         max_weight = pokemon._weight
         heaviest_pokemon = pokemon
 
-print("Heaviest Pokemon:", heaviest_pokemon)
+print("Самый тяжелый покемон", heaviest_pokemon)

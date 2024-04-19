@@ -183,7 +183,7 @@ def act11(message, right_answer: str):
     if message.text == "атаковать ⚔":
         bot.send_message(message.chat.id, 'паук 🕷️ (10❤️/20❤️)', reply_markup=markup)
         bot.send_message(message.chat.id, 'состояние здоровья (10❤️/10❤️) , состояние хитина (20🛡️/20🛡️)', reply_markup=markup)
-        bot.send_message(message.chat.id, 'ты нанес пауку удар , сейчас он может тебя атакать, ты можешь защититься правильно ответив на вопрос !', reply_markup=markup)
+        bot.send_message(message.chat.id, 'ты нанес пауку удар , сейчас он может тебя атаковать, ты можешь защититься правильно ответив на вопрос !', reply_markup=markup)
         bot.send_message(message.chat.id, 'сколько будет 1 * 1 - 1 = ?', reply_markup=markup)
         bot.register_next_step_handler(message, act12, "")
     else:
@@ -297,6 +297,7 @@ def act18(message, right_answer: str):
         markup.add("путешествия 🎒","улучшить колонию ⭐","cтатистика колонии ℹ️",)
         if int(os.environ["hetin"]) < int(os.environ["hetin_max"]):
             os.environ["hetin"] = os.environ["hetin_max"]
+            bot.send_message(message.chat.id, 'хетин востановлен 🛡️', reply_markup=markup)
         if int(os.environ["hp"]) < int(os.environ["hp_max"]):
             os.environ["price_hp"] = str((int(os.environ["hp_max"]) - int(os.environ["hp"]))*2)
             btn1 = "пополнить здоровье ❤️(" + os.environ["price_hp"] + '🌿)'
@@ -513,7 +514,7 @@ def act23(message, right_answer: str):
             bot.send_message(message.chat.id, "❗ не хватает средств ❗", reply_markup=markup)
             bot.register_next_step_handler(message, act18, "")
 
-    if message.text == "2⭐":
+    elif message.text == "2⭐":
         if int(os.environ["sklad"]) >= int(os.environ["price_l_f"]):
             os.environ["laky_f"] = str(int(os.environ["laky_f"]) + 2)
             os.environ["sklad"] = str(int(os.environ["sklad"]) - int(os.environ["price_l_f"]))
@@ -525,7 +526,7 @@ def act23(message, right_answer: str):
         else:
             bot.send_message(message.chat.id, "❗ не хватает средств ❗", reply_markup=markup)
             bot.register_next_step_handler(message, act18, "")
-    if message.text == "3⭐":
+    elif message.text == "3⭐":
         if int(os.environ["sklad"]) >= int(os.environ["price_l_f"]):
             os.environ["hp_max"] = str(int(os.environ["hp_max"]) + 1)
             os.environ["sklad"] = str(int(os.environ["sklad"]) - int(os.environ["price_hp"]))
@@ -594,13 +595,16 @@ def act26(message, right_answer: str):
         if int(os.environ["en_hp"]) <= 0 :
             os.environ["en_hp"] = "0"
             bot.send_message(message.chat.id, "ты выиграл", reply_markup=markup)
+        if int(os.environ["level"]) >= 2:
             if os.environ["en"] == "muravey":
-                number = str(random.randint(3, 10))
+              number = str(random.randint(3, 6))
             if os.environ["en"] == "pauk":
-                number = str(random.randint(6, 16))
-            nasekomoe = "ты можешь собрать части наcекомого(" + number + "🪲)"
+              number = str(random.randint(6, 16))
             markup.add("собрать")
-            bot.send_message(message.chat.id, "ты можеш собрать части начекомого", reply_markup=markup)
+            nasekomoe = "ты можешь собрать части наcекомого(" + number + "🧬)"
+            os.environ["nasekomoe"] = number
+
+            bot.send_message(message.chat.id, nasekomoe, reply_markup=markup)
 
         p = "враг (" + os.environ["en_hp"] + "❤️/" + os.environ["en_hpmax"] + "❤️)"
         hp = "здоровье : " + os.environ["hp"] + "❤️/" + os.environ["hp_max"] + "    " + os.environ["hetin"] + "🛡️/" +  os.environ["hetin_max"] + "🛡️"
@@ -635,11 +639,17 @@ def act26(message, right_answer: str):
 
     elif message.text == "продолжить" and os.environ["is_answer_right"] == "0" and os.environ["step"] == "protection":
         markup.add("продолжить")
-        os.environ["hp"] = str(int(os.environ["hp"]) + int(os.environ["damage_en"]))
+        os.environ["hp"] = str(int(os.environ["hp"]) - int(os.environ["damage_en"]))
         if int(os.environ["hp"]) <= 0:
             bot.send_message(message.chat.id, "ты проиграл", reply_markup=markup)
-        bot.send_message(message.chat.id, "kflyj", reply_markup=markup)
-
+            os.environ["hp"] = "0"
+        else:
+            markup.add("продолжить")
+        p = "враг (" + os.environ["en_hp"] + "❤️/" + os.environ["en_hpmax"] + "❤️)"
+        hp = "здоровье : " + os.environ["hp"] + "❤️/" + os.environ["hp_max"] + "    " + os.environ["hetin"] + "🛡️/" + \
+             os.environ["hetin_max"] + "🛡️"
+        bot.send_message(message.chat.id, p, reply_markup=markup)
+        bot.send_message(message.chat.id, hp, reply_markup=markup)
 
     else :
         bot.register_next_step_handler(message, act26, "")
